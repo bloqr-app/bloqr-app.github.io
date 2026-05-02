@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy – Bloqr</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #0D1320;
+      --card:   #111F34;
+      --border: #1F355A;
+      --orange: #FF7B3E;
+      --blue:   #7AB5FF;
+      --text:   #ECF5FF;
+      --sub:    #89A9CF;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--border); }
+    .nav-logo { font-size: 22px; font-weight: 800; color: var(--orange); text-decoration: none; }
+    .nav-links a { color: var(--sub); text-decoration: none; font-size: 14px; font-weight: 600; margin-left: 24px; }
+    .nav-links a:hover { color: var(--text); }
+    main { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; }
+    h1 { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+    .updated { font-size: 13px; color: var(--sub); margin-bottom: 48px; }
+    h2 { font-size: 18px; font-weight: 700; color: var(--orange); margin: 40px 0 12px; }
+    p { font-size: 15px; color: var(--sub); line-height: 1.8; margin-bottom: 14px; }
+    ul { padding-left: 20px; margin-bottom: 14px; }
+    li { font-size: 15px; color: var(--sub); line-height: 1.8; margin-bottom: 6px; }
+    strong { color: var(--text); }
+    a { color: var(--blue); }
+    .highlight { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 24px 0; }
+    .highlight p { margin: 0; color: var(--text); font-weight: 600; }
+    footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--sub); font-size: 13px; }
+    footer a { color: var(--blue); text-decoration: none; margin: 0 12px; }
+    .footer-copy { margin-top: 12px; color: #3A5070; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/">Bloqr</a>
+  <div class="nav-links">
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="mailto:support@bloqr.app">Support</a>
+  </div>
+</nav>
+
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: May 2, 2026</p>
+
+  <div class="highlight">
+    <p>🔒 Bloqr does not collect, store, or transmit any personal data to external servers. Everything stays on your device.</p>
+  </div>
+
+  <h2>1. Who We Are</h2>
+  <p>Bloqr ("we", "our", or "us") is an Android application developed and maintained by an independent developer. You can reach us at <a href="mailto:support@bloqr.app">support@bloqr.app</a>.</p>
+
+  <h2>2. Information We Do NOT Collect</h2>
+  <p>We do not collect, process, or store any of the following:</p>
+  <ul>
+    <li>Your name, email address, or any account credentials</li>
+    <li>Device identifiers, advertising IDs, or IP addresses (by us)</li>
+    <li>Location coordinates or geofence data outside your device</li>
+    <li>The names of apps you block or usage statistics</li>
+    <li>WiFi network names or passwords</li>
+    <li>Any usage or behavioral analytics</li>
+  </ul>
+
+  <h2>3. Data Stored Locally on Your Device</h2>
+  <p>Bloqr stores the following data <strong>exclusively on your device</strong> using encrypted local storage (MMKV). This data never leaves your device:</p>
+  <ul>
+    <li><strong>Blocking rules and schedules</strong> — apps you've chosen to block, time windows, and trigger conditions</li>
+    <li><strong>App usage statistics</strong> — daily screen time and blocked attempt counts, derived from Android's UsageStats API</li>
+    <li><strong>Focus session history</strong> — completed Pomodoro sessions and total focus time</li>
+    <li><strong>Location-based triggers</strong> — latitude/longitude and radius you set for geofence schedules</li>
+    <li><strong>WiFi trigger data</strong> — network SSIDs you associate with blocking schedules</li>
+    <li><strong>App preferences</strong> — language, PIN, theme, and feature settings</li>
+  </ul>
+
+  <h2>4. Android Permissions</h2>
+  <p>Bloqr requests the following Android permissions, used solely to provide the app's core functionality:</p>
+  <ul>
+    <li><strong>Accessibility Service</strong> — detects which app is in the foreground to enforce blocks. This data is processed in real-time and never stored or transmitted.</li>
+    <li><strong>Usage Stats</strong> — reads per-app daily screen time to display insights and enforce time limits. Data stays on device.</li>
+    <li><strong>Device Administrator</strong> — optional; used only by Strict Mode to prevent uninstallation during a locked focus session.</li>
+    <li><strong>Notification Listener</strong> — optional; used to block notification distractions during focus sessions.</li>
+    <li><strong>Access Fine Location</strong> — used only when you create a location-based schedule trigger. The location is stored locally; we do not track your movements.</li>
+    <li><strong>Access WiFi State</strong> — reads the current WiFi network name to activate WiFi-based schedule triggers. Not transmitted.</li>
+    <li><strong>Foreground Service</strong> — keeps the blocking service active in the background while blocking is enabled.</li>
+  </ul>
+
+  <h2>5. Third-Party Services</h2>
+  <p>Bloqr integrates the following third-party SDKs which may collect data under their own privacy policies:</p>
+  <ul>
+    <li>
+      <strong>Google AdMob</strong> — displays advertisements in the free tier of the app.
+      AdMob may collect device identifiers and serve personalized ads in accordance with
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.
+      You can opt out of personalized ads in your device settings under Google → Ads.
+    </li>
+    <li>
+      <strong>RevenueCat</strong> — manages in-app purchases and subscription status.
+      RevenueCat may process a pseudonymous user identifier and purchase metadata.
+      See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.
+    </li>
+    <li>
+      <strong>Google Maps SDK for Android</strong> — renders the map used to select geofence locations.
+      Google may collect data in accordance with
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.
+    </li>
+  </ul>
+
+  <h2>6. Children's Privacy</h2>
+  <p>Bloqr is not directed at children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided personal information through a third-party SDK integrated with the app, please contact us at <a href="mailto:support@bloqr.app">support@bloqr.app</a>.</p>
+
+  <h2>7. Data Security</h2>
+  <p>All data stored by Bloqr is written to MMKV encrypted local storage on your Android device. We do not operate servers, databases, or cloud infrastructure that receives your data. Your blocking rules and usage stats are as secure as your device itself.</p>
+
+  <h2>8. Your Rights</h2>
+  <p>Because we do not collect or hold your personal data, there is nothing for us to delete, export, or correct on our end. To erase all Bloqr data, simply uninstall the app — this removes all locally stored data from your device.</p>
+
+  <h2>9. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated "Last updated" date. Continued use of the app after changes constitutes acceptance of the revised policy.</p>
+
+  <h2>10. Contact Us</h2>
+  <p>If you have any questions about this Privacy Policy, please contact us:</p>
+  <p>
+    📧 <a href="mailto:support@bloqr.app">support@bloqr.app</a><br />
+    🌐 <a href="https://bloqr.app">bloqr.app</a>
+  </p>
+</main>
+
+<footer>
+  <a href="/">Home</a>
+  <a href="/privacy">Privacy Policy</a>
+  <a href="/terms">Terms of Service</a>
+  <a href="mailto:support@bloqr.app">support@bloqr.app</a>
+  <div class="footer-copy">&copy; 2026 Bloqr. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
