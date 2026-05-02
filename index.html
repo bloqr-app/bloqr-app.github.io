@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloqr – App Blocker & Focus</title>
+  <meta name="description" content="Block distracting apps and build better focus habits with Bloqr for Android." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #0D1320;
+      --card:    #111F34;
+      --border:  #1F355A;
+      --orange:  #FF7B3E;
+      --blue:    #7AB5FF;
+      --teal:    #82DCC8;
+      --text:    #ECF5FF;
+      --sub:     #89A9CF;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid var(--border); }
+    .nav-logo { font-size: 22px; font-weight: 800; color: var(--orange); letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: var(--sub); text-decoration: none; font-size: 14px; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero { text-align: center; padding: 100px 24px 80px; max-width: 680px; margin: 0 auto; }
+    .hero-badge { display: inline-block; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: 700; color: var(--orange); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px; }
+    .hero h1 { font-size: clamp(42px, 8vw, 68px); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 24px; }
+    .hero h1 span { color: var(--orange); }
+    .hero p { font-size: 18px; color: var(--sub); line-height: 1.7; margin-bottom: 40px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--orange); color: #fff; font-size: 16px; font-weight: 700; padding: 16px 32px; border-radius: 14px; text-decoration: none; transition: opacity .2s; }
+    .hero-cta:hover { opacity: 0.88; }
+
+    /* FEATURES */
+    .features { max-width: 1000px; margin: 0 auto; padding: 60px 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+    .feature-icon { font-size: 28px; margin-bottom: 16px; }
+    .feature-card h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--sub); line-height: 1.6; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--sub); font-size: 13px; }
+    footer a { color: var(--blue); text-decoration: none; margin: 0 12px; }
+    footer a:hover { text-decoration: underline; }
+    .footer-copy { margin-top: 12px; color: #3A5070; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Bloqr</span>
+  <div class="nav-links">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="mailto:support@bloqr.app">Support</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">Android App</div>
+  <h1>Block distractions.<br /><span>Own your focus.</span></h1>
+  <p>Bloqr lets you block apps on a schedule, set time limits, and run Pomodoro focus sessions — all without any cloud account required.</p>
+  <a class="hero-cta" href="https://play.google.com/store/apps/details?id=com.bloqr">
+    Get it on Google Play
+  </a>
+</section>
+
+<section class="features">
+  <div class="feature-card">
+    <div class="feature-icon">🚫</div>
+    <h3>App Blocking</h3>
+    <p>Block any app by schedule, time limit, or WiFi network. Works even when you try to sneak back in.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">⏱️</div>
+    <h3>Pomodoro Timer</h3>
+    <p>Built-in focus sessions with customizable work/break intervals and round tracking.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📍</div>
+    <h3>Location & WiFi Triggers</h3>
+    <p>Automatically activate blocking rules when you arrive at work, school, or connect to a specific network.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🔒</div>
+    <h3>Strict Mode</h3>
+    <p>Lock yourself in. Strict Mode prevents disabling blocking until your session ends — no cheating.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">📊</div>
+    <h3>Usage Insights</h3>
+    <p>See exactly how much time you spend in each app, blocked attempts, and weekly trends.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🔐</div>
+    <h3>100% Private</h3>
+    <p>All your data stays on your device. No account, no sync, no tracking.</p>
+  </div>
+</section>
+
+<footer>
+  <a href="/privacy">Privacy Policy</a>
+  <a href="/terms">Terms of Service</a>
+  <a href="mailto:support@bloqr.app">support@bloqr.app</a>
+  <div class="footer-copy">&copy; 2026 Bloqr. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
