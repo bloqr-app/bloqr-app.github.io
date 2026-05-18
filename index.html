@@ -144,7 +144,11 @@
       display: flex; gap: 20px;
       padding: 0 48px 24px;
       width: fit-content; min-width: 100%;
-      justify-content: center;
+      justify-content: flex-start;
+    }
+    /* Center only when all 5 screenshots fit (5×224 + 4×20 + 2×48 ≈ 1296px) */
+    @media (min-width: 1300px) {
+      .screenshots-track { justify-content: center; }
     }
     .screenshot-item { flex: 0 0 auto; scroll-snap-align: start; text-align: center; }
     .screenshot-item img {
