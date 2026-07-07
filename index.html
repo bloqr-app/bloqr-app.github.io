@@ -139,16 +139,63 @@
     .hero-visual {
       display: flex; justify-content: center; align-items: center;
       position: relative;
+      perspective: 1000px;
     }
     .hero-glow {
       position: absolute; width: 420px; height: 420px; border-radius: 50%;
       background: radial-gradient(circle, rgba(255,123,62,0.16) 0%, transparent 70%);
       pointer-events: none;
+      animation: glow-pulse 5.5s ease-in-out infinite;
     }
-    .hero-visual img {
-      width: 284px; border-radius: 28px; position: relative; z-index: 2;
+    .phone-wrap {
+      position: relative; z-index: 2;
+      cursor: pointer; user-select: none; -webkit-user-select: none;
+      transition: transform .35s cubic-bezier(.16,1,.3,1);
+      transform-style: preserve-3d;
+    }
+    .phone-wrap img {
+      width: 284px; border-radius: 28px;
       box-shadow: 0 36px 88px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,123,62,0.1);
+      animation: phone-float 6s ease-in-out infinite;
     }
+    .phone-wrap.deny { animation: phone-deny .45s ease; }
+    .phone-toast {
+      position: absolute; top: 38%; left: 50%; z-index: 3;
+      transform: translate(-50%, 10px) scale(0.9);
+      opacity: 0; pointer-events: none; white-space: nowrap;
+      background: rgba(13,19,32,0.94); border: 1px solid var(--orange);
+      border-radius: 12px; padding: 10px 18px;
+      font-size: 13px; font-weight: 700;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+      transition: opacity .25s ease, transform .3s cubic-bezier(.16,1,.3,1);
+    }
+    .phone-toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+    /* Hero entrance */
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(26px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: .8; transform: scale(1); }
+      50%      { opacity: 1;  transform: scale(1.07); }
+    }
+    @keyframes phone-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @keyframes phone-deny {
+      0%, 100% { transform: none; }
+      20% { transform: translateX(-7px) rotate(-1.4deg); }
+      40% { transform: translateX(6px)  rotate(1.1deg); }
+      60% { transform: translateX(-4px) rotate(-0.7deg); }
+      80% { transform: translateX(2px); }
+    }
+    .hero .badge        { animation: rise-in .7s cubic-bezier(.16,1,.3,1) .05s backwards; }
+    .hero h1            { animation: rise-in .7s cubic-bezier(.16,1,.3,1) .15s backwards; }
+    .hero .hero-sub     { animation: rise-in .7s cubic-bezier(.16,1,.3,1) .27s backwards; }
+    .hero .hero-actions { animation: rise-in .7s cubic-bezier(.16,1,.3,1) .39s backwards; }
+    .hero .hero-visual  { animation: rise-in .9s cubic-bezier(.16,1,.3,1) .25s backwards; }
 
     /* ── Divider ───────────────────────────────────────────── */
     .divider {
@@ -385,7 +432,10 @@
   </div>
   <div class="hero-visual">
     <div class="hero-glow"></div>
-    <img src="images/s-home.png" alt="Bloqr home screen — Quick Block active" loading="eager" />
+    <div class="phone-wrap" id="hero-phone" title="Try to open a distraction">
+      <img src="images/s-home.png" alt="Bloqr home screen — Quick Block active" loading="eager" draggable="false" />
+      <div class="phone-toast" id="phone-toast">🛡️ Distraction blocked</div>
+    </div>
   </div>
 </section>
 
@@ -627,6 +677,46 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     revealEls.forEach(function (el) { io.observe(el); });
   }
+
+  // Hero phone: 3D tilt on pointer + "distraction blocked" easter egg
+  var phone = document.getElementById('hero-phone');
+  var toast = document.getElementById('phone-toast');
+  var visual = phone.parentElement;
+
+  if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    visual.addEventListener('mousemove', function (e) {
+      var r = visual.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      phone.style.transform = 'rotateY(' + (x * 10) + 'deg) rotateX(' + (y * -10) + 'deg)';
+    });
+    visual.addEventListener('mouseleave', function () {
+      phone.style.transform = '';
+    });
+  }
+
+  var blockedCount = 0;
+  var toastTimer;
+  var messages = [
+    '🛡️ Distraction blocked',
+    '🛡️ Blocked again',
+    '🚫 Still blocked',
+    '🔒 Strict Mode: nice try',
+    '🧘 Go do something great'
+  ];
+  phone.addEventListener('click', function () {
+    blockedCount++;
+    var msg = messages[Math.min(blockedCount, messages.length) - 1];
+    toast.textContent = msg + (blockedCount > 1 ? '  ×' + blockedCount : '');
+    toast.classList.add('show');
+    if (!reduceMotion) {
+      phone.classList.remove('deny');
+      void phone.offsetWidth;
+      phone.classList.add('deny');
+    }
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1600);
+  });
 })();
 </script>
 
