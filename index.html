@@ -292,10 +292,21 @@
     .feature-card {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 16px; padding: 28px;
-      transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
     }
-    .feature-card:hover { border-color: var(--orange); transform: translateY(-4px); }
-    .feature-icon { font-size: 30px; margin-bottom: 16px; }
+    .feature-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(255,123,62,0.09), transparent 65%);
+      opacity: 0; transition: opacity .35s ease;
+    }
+    .feature-card:hover { border-color: var(--orange); transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.35); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      font-size: 30px; margin-bottom: 16px; width: fit-content;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .feature-card:hover .feature-icon { transform: scale(1.18) rotate(-5deg); }
     .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
     .feature-card p { font-size: 14px; color: var(--sub); line-height: 1.65; }
 
@@ -306,11 +317,18 @@
       background: var(--card); border: 1px solid var(--border);
       border-radius: 20px; padding: 36px 32px;
       display: flex; flex-direction: column;
+      transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .3s, box-shadow .3s;
     }
+    .price-card:hover { transform: translateY(-5px); border-color: var(--dim); }
     .price-card.featured {
       border-color: var(--orange);
       background: linear-gradient(135deg, #1B1208 0%, #111F34 100%);
       position: relative;
+      box-shadow: 0 0 44px rgba(255,123,62,0.08);
+    }
+    .price-card.featured:hover {
+      border-color: var(--orange);
+      box-shadow: 0 22px 64px rgba(255,123,62,0.16);
     }
     .price-badge {
       position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
@@ -330,9 +348,11 @@
       display: block; padding: 14px; border-radius: 12px;
       margin-top: auto;
       text-align: center; font-size: 15px; font-weight: 700;
-      transition: opacity .2s; cursor: pointer;
+      transition: transform .2s, box-shadow .2s, filter .2s; cursor: pointer;
     }
-    .price-cta:hover { opacity: 0.85; }
+    .price-cta:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .price-cta.primary:hover { box-shadow: 0 10px 28px rgba(255,123,62,0.35); }
+    .price-cta:active { transform: scale(0.97); }
     .price-cta.primary { background: var(--orange); color: #fff; }
     .price-cta.secondary { background: var(--border); color: var(--text); }
 
@@ -690,6 +710,17 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  // Feature cards: cursor-following glow
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.feature-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
   }
 
   // Hero phone: 3D tilt on pointer + "distraction blocked" easter egg
