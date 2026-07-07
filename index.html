@@ -129,7 +129,9 @@
       transition: transform .2s, box-shadow .2s;
     }
     .btn-play:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,123,62,0.22); }
-    .play-icon { width: 22px; height: 22px; flex-shrink: 0; }
+    .btn-play:active { transform: translateY(0) scale(0.97); }
+    .play-icon { width: 22px; height: 22px; flex-shrink: 0; transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+    .btn-play:hover .play-icon { transform: scale(1.12); }
     .play-text { display: flex; flex-direction: column; line-height: 1.2; }
     .play-label { font-size: 10px; font-weight: 500; letter-spacing: 0.5px; color: #555; text-transform: uppercase; }
     .play-store { font-size: 17px; font-weight: 800; color: #0D1320; }
@@ -362,7 +364,16 @@
       background: linear-gradient(135deg, #1B1208 0%, #111F34 55%, #0A1228 100%);
       border: 1px solid rgba(255,123,62,0.28);
       border-radius: 24px; padding: 80px 48px; text-align: center;
+      position: relative; overflow: hidden;
     }
+    .cta-banner::before {
+      content: ""; position: absolute; pointer-events: none;
+      width: 640px; height: 640px; border-radius: 50%;
+      top: -320px; left: 50%; margin-left: -320px;
+      background: radial-gradient(circle, rgba(255,123,62,0.13), transparent 68%);
+      animation: glow-pulse 6s ease-in-out infinite;
+    }
+    .cta-banner > * { position: relative; }
     .cta-banner h2 {
       font-size: clamp(32px, 5vw, 58px); font-weight: 900;
       letter-spacing: -2px; margin-bottom: 16px;
@@ -380,8 +391,8 @@
     .footer-logo { font-size: 16px; font-weight: 800; }
     .footer-copy { font-size: 13px; color: var(--dim); }
     .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-    .footer-links a { font-size: 13px; color: var(--sub); transition: color .2s; }
-    .footer-links a:hover { color: var(--text); }
+    .footer-links a { font-size: 13px; color: var(--sub); transition: color .2s, transform .2s; display: inline-block; }
+    .footer-links a:hover { color: var(--text); transform: translateY(-1px); }
 
     /* ── Responsive ────────────────────────────────────────── */
     @media (max-width: 900px) {
