@@ -29,6 +29,7 @@
       --dim:    #4A6A8F;
     }
     html { scroll-behavior: smooth; }
+    ::selection { background: rgba(255,123,62,0.35); color: var(--text); }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg);
@@ -39,14 +40,36 @@
     a { text-decoration: none; color: inherit; }
     img { display: block; max-width: 100%; }
 
+    /* ── Motion / scroll reveal ───────────────────────────── */
+    [data-reveal] {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+      transition-delay: var(--d, 0s);
+    }
+    [data-reveal="left"]  { transform: translateX(-40px); }
+    [data-reveal="right"] { transform: translateX(40px); }
+    [data-reveal="scale"] { transform: scale(0.94) translateY(16px); }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+
     /* ── Nav ───────────────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 0 48px; height: 64px;
-      background: rgba(13,19,32,0.9);
+      background: rgba(13,19,32,0.75);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid transparent;
+      transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+    }
+    nav.scrolled {
+      background: rgba(13,19,32,0.92);
+      border-bottom-color: var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
     }
     .nav-logo {
       display: flex; align-items: center; gap: 10px;
@@ -56,11 +79,22 @@
     .nav-links { display: flex; align-items: center; gap: 32px; }
     .nav-links a { font-size: 14px; font-weight: 600; color: var(--sub); transition: color .2s; }
     .nav-links a:hover { color: var(--text); }
+    .nav-links a:not(.nav-cta) { position: relative; }
+    .nav-links a:not(.nav-cta)::after {
+      content: ""; position: absolute; left: 0; bottom: -5px;
+      width: 100%; height: 2px; border-radius: 2px;
+      background: var(--orange);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .28s cubic-bezier(.16,1,.3,1);
+    }
+    .nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); transform-origin: left; }
     .nav-cta {
       background: var(--orange) !important; color: #fff !important;
       padding: 9px 22px; border-radius: 10px; font-weight: 700 !important;
+      transition: transform .2s, box-shadow .2s, filter .2s;
     }
-    .nav-cta:hover { opacity: 0.87; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,123,62,0.35); filter: brightness(1.05); }
+    .nav-cta:active { transform: translateY(0) scale(0.97); }
 
     /* ── Hero ──────────────────────────────────────────────── */
     .hero {
@@ -359,27 +393,27 @@
 
 <!-- SCREENSHOTS -->
 <section class="screenshots-section">
-  <p class="section-label">The full picture</p>
-  <h2 class="section-title">Every feature you need<br>to take back your time</h2>
+  <p class="section-label" data-reveal>The full picture</p>
+  <h2 class="section-title" data-reveal style="--d:.08s">Every feature you need<br>to take back your time</h2>
   <div class="screenshots-wrapper">
     <div class="screenshots-track">
-      <div class="screenshot-item">
+      <div class="screenshot-item" data-reveal style="--d:.05s">
         <img src="images/s-home.png" alt="Quick Block and home dashboard" loading="lazy" />
         <p class="screenshot-caption">Quick Block &amp; dashboard</p>
       </div>
-      <div class="screenshot-item">
+      <div class="screenshot-item" data-reveal style="--d:.13s">
         <img src="images/s-focus.png" alt="Pomodoro focus session timer" loading="lazy" />
         <p class="screenshot-caption">Pomodoro with app lock</p>
       </div>
-      <div class="screenshot-item">
+      <div class="screenshot-item" data-reveal style="--d:.21s">
         <img src="images/s-strict.png" alt="Strict Mode active screen" loading="lazy" />
         <p class="screenshot-caption">Strict Mode — no cheating</p>
       </div>
-      <div class="screenshot-item">
+      <div class="screenshot-item" data-reveal style="--d:.29s">
         <img src="images/s-location.png" alt="Location-based blocking" loading="lazy" />
         <p class="screenshot-caption">Location &amp; WiFi triggers</p>
       </div>
-      <div class="screenshot-item">
+      <div class="screenshot-item" data-reveal style="--d:.37s">
         <img src="images/s-stats.png" alt="Usage insights and screen time" loading="lazy" />
         <p class="screenshot-caption">Usage insights &amp; trends</p>
       </div>
@@ -393,45 +427,45 @@
 <section class="showcase" id="features">
 
   <div class="showcase-row">
-    <div class="showcase-text">
+    <div class="showcase-text" data-reveal="left">
       <p class="eyebrow">Blocking</p>
       <h2>Block any app,<br>any time.</h2>
       <p>Schedule blocking by time window, WiFi network, or GPS location. Set daily time limits. Quick Block locks everything in one tap when you need to focus right now.</p>
     </div>
-    <div class="showcase-img">
+    <div class="showcase-img" data-reveal="right" style="--d:.1s">
       <img src="images/s-home.png" alt="App blocking screen" loading="lazy" />
     </div>
   </div>
 
   <div class="showcase-row reverse">
-    <div class="showcase-text">
+    <div class="showcase-text" data-reveal="right">
       <p class="eyebrow">Focus Sessions</p>
       <h2>Deep focus with<br>Pomodoro built in.</h2>
       <p>Work/break intervals with automatic app blocking during work rounds. Custom durations, round tracking, and end-of-session alerts — all without leaving the zone.</p>
     </div>
-    <div class="showcase-img">
+    <div class="showcase-img" data-reveal="left" style="--d:.1s">
       <img src="images/s-focus.png" alt="Pomodoro timer screen" loading="lazy" />
     </div>
   </div>
 
   <div class="showcase-row">
-    <div class="showcase-text">
+    <div class="showcase-text" data-reveal="left">
       <p class="eyebrow">Strict Mode</p>
       <h2>Lock yourself in.<br>No excuses.</h2>
       <p>Activate Strict Mode and blocking can't be disabled until the timer expires, the charger is plugged in, or you enter your emergency code. You committed — the app holds you to it.</p>
     </div>
-    <div class="showcase-img">
+    <div class="showcase-img" data-reveal="right" style="--d:.1s">
       <img src="images/s-strict.png" alt="Strict Mode screen" loading="lazy" />
     </div>
   </div>
 
   <div class="showcase-row reverse">
-    <div class="showcase-text">
+    <div class="showcase-text" data-reveal="right">
       <p class="eyebrow">Insights</p>
       <h2>Know where your<br>time actually goes.</h2>
       <p>Daily and weekly screen time by app, blocked attempt counts, notification totals, and your longest uninterrupted focus window. Data that drives change.</p>
     </div>
-    <div class="showcase-img">
+    <div class="showcase-img" data-reveal="left" style="--d:.1s">
       <img src="images/s-stats.png" alt="Insights screen showing 56h screen time" loading="lazy" />
     </div>
   </div>
@@ -441,50 +475,50 @@
 <!-- FEATURE CARDS -->
 <section class="features">
   <div class="divider"></div>
-  <p class="section-label" style="margin-top:56px">Everything included</p>
-  <h2 class="section-title">Built for people who<br>are serious about focus</h2>
+  <p class="section-label" data-reveal style="margin-top:56px">Everything included</p>
+  <h2 class="section-title" data-reveal style="--d:.08s">Built for people who<br>are serious about focus</h2>
   <div class="features-grid">
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.05s">
       <div class="feature-icon">⏰</div>
       <h3>Scheduled Blocking</h3>
       <p>Recurring block windows by day, time, WiFi network, or GPS location. Activates automatically — no willpower required.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.13s">
       <div class="feature-icon">⚡</div>
       <h3>Quick Block</h3>
       <p>One tap to block all selected apps for 15 min, 1 hour, or until you manually stop. Instant focus, zero setup.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.21s">
       <div class="feature-icon">🔒</div>
       <h3>Strict Mode</h3>
       <p>Prevents disabling blocks, editing rules, or killing the app while active. You're committed — and that's exactly the point.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.05s">
       <div class="feature-icon">🍅</div>
       <h3>Pomodoro Timer</h3>
       <p>Built-in focus sessions with app blocking during work rounds and automatic break tracking.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.13s">
       <div class="feature-icon">📊</div>
       <h3>Usage Insights</h3>
       <p>Screen time trends, top apps, notification counts, and pickup tracking — all on your device, private.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.21s">
       <div class="feature-icon">🌐</div>
       <h3>Site Blocking</h3>
       <p>Block specific domains and keywords inside Android browsers. Follows you into Chrome, Firefox, and more.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.05s">
       <div class="feature-icon">📍</div>
       <h3>Location Triggers</h3>
       <p>Geofence-based blocking that activates when you arrive at a location — work, school, the library.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.13s">
       <div class="feature-icon">🔔</div>
       <h3>Notification Blocking</h3>
       <p>Silence notifications from blocked apps entirely so you're not pulled back in through the notification shade.</p>
     </div>
-    <div class="feature-card">
+    <div class="feature-card" data-reveal style="--d:0.21s">
       <div class="feature-icon">🌍</div>
       <h3>12 Languages</h3>
       <p>Full UI in EN, PT, ES, FR, DE, IT, JA, KO, AR, RU, TR, ID — set automatically from your system language.</p>
@@ -494,10 +528,10 @@
 
 <!-- PRICING -->
 <section class="pricing" id="pricing">
-  <p class="section-label">Pricing</p>
+  <p class="section-label" data-reveal>Pricing</p>
   <h2 class="section-title">Start free. Go Pro<br>when you're ready.</h2>
   <div class="pricing-grid">
-    <div class="price-card">
+    <div class="price-card" data-reveal style="--d:.1s">
       <p class="price-name">Free</p>
       <p class="price-amount">$0</p>
       <p class="price-period">Forever free, no credit card</p>
@@ -515,7 +549,7 @@
       </ul>
       <a class="price-cta secondary" href="https://play.google.com/store/apps/details?id=com.bloqr">Download Free</a>
     </div>
-    <div class="price-card featured">
+    <div class="price-card featured" data-reveal style="--d:.22s">
       <div class="price-badge">MOST POPULAR</div>
       <p class="price-name">Pro</p>
       <p class="price-amount" style="color:var(--orange)">$2.99</p>
@@ -537,7 +571,7 @@
 <div class="divider" style="max-width:1100px;margin:0 auto 100px;"></div>
 
 <!-- CTA -->
-<section class="cta-banner">
+<section class="cta-banner" data-reveal="scale">
   <h2>Ready to reclaim<br><span style="color:var(--orange)">your focus?</span></h2>
   <p>Free to download. No account required to get started.</p>
   <div class="cta-actions">
@@ -567,6 +601,34 @@
     <a href="mailto:support@bloqr.app">support@bloqr.app</a>
   </div>
 </footer>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Nav elevation on scroll
+  var nav = document.querySelector('nav');
+  function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
 
 </body>
 </html>
