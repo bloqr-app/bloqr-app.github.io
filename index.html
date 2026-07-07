@@ -51,9 +51,15 @@
     [data-reveal="scale"] { transform: scale(0.94) translateY(16px); }
     [data-reveal].is-visible { opacity: 1; transform: none; }
     @media (prefers-reduced-motion: reduce) {
+      /* Only suppress autoplay/looping motion (entrance, float, pulse, scroll-reveal).
+         Click/hover-triggered feedback (tilt, shake, button/card hovers) stays on —
+         it's user-initiated and bounded, not the kind of motion this preference targets. */
       html { scroll-behavior: auto; }
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-      [data-reveal] { opacity: 1; transform: none; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .hero .badge, .hero h1, .hero .hero-sub, .hero .hero-actions, .hero .hero-visual,
+      .hero-glow, .phone-wrap img, .cta-banner::before {
+        animation: none !important;
+      }
     }
 
     /* ── Nav ───────────────────────────────────────────────── */
@@ -740,7 +746,7 @@
   var toast = document.getElementById('phone-toast');
   var visual = phone.parentElement;
 
-  if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+  if (window.matchMedia('(pointer: fine)').matches) {
     visual.addEventListener('mousemove', function (e) {
       var r = visual.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width - 0.5;
@@ -766,11 +772,9 @@
     var msg = messages[Math.min(blockedCount, messages.length) - 1];
     toast.textContent = msg + (blockedCount > 1 ? '  ×' + blockedCount : '');
     toast.classList.add('show');
-    if (!reduceMotion) {
-      phone.classList.remove('deny');
-      void phone.offsetWidth;
-      phone.classList.add('deny');
-    }
+    phone.classList.remove('deny');
+    void phone.offsetWidth;
+    phone.classList.add('deny');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 1600);
   });
